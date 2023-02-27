@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 
 
@@ -9,10 +10,18 @@ namespace ConsoleApp7
     {
         static void Main(string[] args)
         {
-            Drawing Render = new Drawing("Result", 1000, 1000, 0xFFFFFFFF);
-            DrawRotatedSquare(Render, 400, 400, 200, 200, 0);
-            DrawSurroundingSquares(Render, 500, 500, 50,50 ,50, 3);
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            // Start the timer
+
+            uint Width = 20000; uint Height = 20000; uint size = 20000;
+            Drawing Render = new Drawing("Result", Width, Height, 0xFFFFFFFF);
+            DrawRotatedSquare(Render, (int)Width / 2 -((int)Width/10), (int)Height / 2 -((int)Height/10) , (int)Width/5, (int)Height / 5, 0);
+            DrawSurroundingSquares(Render, (int)Width/2, (int)Height/2, (int)Width / 20, (int)Height / 20, (int)size/20, 3);
             Render.Write();
+
+            // Stops the timer
+            stopwatch.Stop();
+            Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
         }
       
         private static void DrawRotatedSquare(Drawing Render, int x, int y,int Width, int Height, int size)

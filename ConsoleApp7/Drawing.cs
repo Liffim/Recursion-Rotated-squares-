@@ -3,7 +3,12 @@ namespace ConsoleApp7
 {
     internal class Drawing
     {
-        public Drawing(string OutputName, uint Width, uint Height, uint FillingColor) // Color format is ARGB (to define recomended hex: 0xAARRGGBB), coordinates start from bottom left corner, 1 unit is 1 pixel, only 256 colors can be used
+        private readonly uint Width;
+        private readonly uint Height;
+        private readonly byte[] Buffer;
+        private readonly List<uint> Colors;
+        private readonly string OutputName;
+        public Drawing(string OutputName, uint Width, uint Height, uint FillingColor)
         {
             this.Width = Width;
             this.Height = Height;
@@ -17,32 +22,6 @@ namespace ConsoleApp7
             this.OutputName = OutputName;
             if (!OutputName.Contains(".bmp"))
                 this.OutputName += ".bmp";
-        }
-
-
-        public void DrawRotatedFilledSquare(double X, double Y, double Width, double Height, uint Color = 0)
-        {
-            // Define center point of square
-            double Cx = X + Width / 2;
-            double Cy = Y + Height / 2;
-
-            // Rotate each pixel in square by 45 degrees and set color
-            for (double SY = 0; SY < Height; SY++)
-            {
-                for (double SX = 0; SX < Width; SX++)
-                {
-                    // Calculate new pixel location after rotation
-                    double Xp = SX - Width / 2;
-                    double Yp = SY - Height / 2;
-                    double Xnew = Xp * Math.Cos(Math.PI / 4) - Yp * Math.Sin(Math.PI / 4) + Cx;
-                    double Ynew = Xp * Math.Sin(Math.PI / 4) + Yp * Math.Cos(Math.PI / 4) + Cy;
-
-                    SetPixel(Xnew, Ynew, Color);
-                    //SetPixel(Xnew + 1, Ynew + 1, Color);
-                    SetPixel(Xnew, Ynew + 1, Color);
-                    //SetPixel(Xnew, Ynew - 1, Color);
-                }
-            }
         }
         private void SetPixel(double X, double Y, uint Color)
         {
@@ -73,6 +52,33 @@ namespace ConsoleApp7
 
             return Pixel;
         }
+
+
+        public void DrawRotatedFilledSquare(double X, double Y, double Width, double Height, uint Color = 0)
+        {
+            // Define center point of square
+            double Cx = X + Width / 2;
+            double Cy = Y + Height / 2;
+
+            // Rotate each pixel in square by 45 degrees and set color
+            for (double SY = 0; SY < Height; SY++)
+            {
+                for (double SX = 0; SX < Width; SX++)
+                {
+                    // Calculate new pixel location after rotation
+                    double Xp = SX - Width / 2;
+                    double Yp = SY - Height / 2;
+                    double Xnew = Xp * Math.Cos(Math.PI / 4) - Yp * Math.Sin(Math.PI / 4) + Cx;
+                    double Ynew = Xp * Math.Sin(Math.PI / 4) + Yp * Math.Cos(Math.PI / 4) + Cy;
+
+                    SetPixel(Xnew, Ynew, Color);
+                    //SetPixel(Xnew + 1, Ynew + 1, Color);
+                    SetPixel(Xnew, Ynew + 1, Color);
+                    //SetPixel(Xnew, Ynew - 1, Color);
+                }
+            }
+        }
+       
 
         public void Write()
         {
@@ -114,10 +120,6 @@ namespace ConsoleApp7
             }
         }
 
-        private readonly uint Width;
-        private readonly uint Height;
-        private readonly byte[] Buffer;
-        private readonly List<uint> Colors;
-        private readonly string OutputName;
+        
     }
 }
