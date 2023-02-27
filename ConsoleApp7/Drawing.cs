@@ -38,9 +38,9 @@ namespace ConsoleApp7
                     double Ynew = Xp * Math.Sin(Math.PI / 4) + Yp * Math.Cos(Math.PI / 4) + Cy;
 
                     SetPixel(Xnew, Ynew, Color);
-                    SetPixel(Xnew + 1, Ynew + 1, Color);
+                    //SetPixel(Xnew + 1, Ynew + 1, Color);
                     SetPixel(Xnew, Ynew + 1, Color);
-                    SetPixel(Xnew, Ynew - 1, Color);
+                    //SetPixel(Xnew, Ynew - 1, Color);
                 }
             }
         }
